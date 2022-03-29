@@ -425,13 +425,10 @@ makeResult: function (callback) {
     if(result){
         result.remove();
     }
-
-
+    
     self.drawImageOnPoster(game['imgList'],ctx,leftList,topList);
     console.log(game['imgList']);
     //还可以在canvas上绘制文字和其他图片资源，且一般图片资源用base64格式比较合适
-
-
 
     var data = canvas.toDataURL('image/png');
     var _img = new Image();
