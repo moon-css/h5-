@@ -68,17 +68,17 @@ build.xml
 ### res
 audio  
 video  
-### src
-#### base
-#### action
-#### label
-#### layer
+### src  
+#### base 
+**action**  
+**label**  
+**layer**  
 BaseLayer.js  
 TLayer.js  
-#### scene
-BaseScene.js
-#### sprite
-### unit
+**scene**  
+BaseScene.js  
+**sprite**  
+#### unit
 AnimationSprite.js  
 FloatLayer.js  
 MusicLayer.js  
@@ -123,7 +123,103 @@ npm run export2
 ### 3.代码开发
 开始编写项目代码，从加载页到内容页再到海报页。
 #### 加载页
-在**index.html**中的添加div，然后在**css**中添加div样式和动画，并且将加载页需要的功能用js在**index.html**中的script里实现
+
+代码示例：
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>页面标题</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="root">
+        <div id="loading">
+    		<!--加载页元素-->	
+        </div>
+    </div>
+    <!--引入文件-->
+    
+    <script src="libs/Stage.min.js"></script>
+    <script>
+        var h5_config = {
+            baseUrl: '',
+            baseLink: '正式链接',
+            para: '',
+            key:'abc123',
+            ukey:'user123',
+            startTime:new Date().getTime(),
+            wxConfig: {
+                // 配置信息, 即使不正确也能使用 wx.ready
+                debug: false,
+                appId: '',
+                timestamp: 1,
+                nonceStr: '',
+                signature: '',
+                jsApiList: []
+            },
+            nickname:'昵称',
+	    headImgUrl:'',
+            visitCount:10330,
+            titleArr: [点对点分享标题],
+            descArr: [点对点分享描述],
+            descArr2: [朋友圈分享标题],
+            loadJs: function (url,callback) {
+                var script = document.createElement("script");
+                script.src = url;
+                document.body.appendChild(script);
+                script.addEventListener("load", function () {
+                    script.parentNode.removeChild(script);
+                    callback && callback();
+                    this.removeEventListener('load', arguments.callee, false);
+                });
+            }
+        };
+        var video2;
+        var act;
+        var video_radio = 1240 / 750;
+        var stage = new Stage('root', {
+            width: 640,
+            height: 1240,
+            designWidth: 750,
+            designHeight: 1240,
+            safeWidth: 600,
+            safeHeight: 1030,
+            zIndex: 1001
+        });
+        // stage.show();
+        stage.setResizeCallback(function () {
+            var offsetX = (stage.w - stage.width) / 2;
+        });
+	//加载进度
+        function updateProgress(progress) {
+            var number = Math.floor(progress * 100);
+            document.getElementById('loading').innerHTML = "加载进度：" + number + "%";//loading替换为自己定义的加载进度数字的div的id名
+        }
+        updateProgress(0);
+        window.onload = function () {
+            setTimeout(function () {
+                stage.show();
+                var loading = document.getElementById('loading');
+                loading.style.opacity = '1';
+            }, 300);
+            h5_config.loadJs('js/game.js',function(){
+                h5_config.loadJs('js/loader.js');
+            });
+        };
+    </script>
+    <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
+</body>
+</html>
+```
+
+
+
+
+
 #### 内容页
 在结束加载页的绘制后，我们在**src/base/layer**文件夹中的**TLayer.js**中进行内容页的绘制，使用**cocos2dx.js**的功能来实现图层的动画效果，以及页面的跳转。同时在**TLayer.js**文件的最后，我们有整理总结一些页面可以用到的功能函数，可以方便用户直接使用。
 #### 海报页
@@ -197,104 +293,6 @@ npm run export2
     <div id="loading_percent_4" class="sprite"></div>
 </div>
 
-//css样式
-
-#loading_number{
-    font-size: 30px;
-    color: rgba(255, 255, 255,0.8);
-    line-height: 1.2;
-    text-align: right;
-    position: absolute;
-    left: 246.47px;
-    top: 798.28px;
-    z-index: 3;
-}
-
-.sprite{
-    background-image: url('../images/number.png');
-}
-.loading_num_0{
-    width:20px;
-    height:33px;
-    background-position: -1px -40px
-}
-.loading_num_1{
-    width:12px; 
-    height:33px; 
-    background-position: -105px -36px
-}
-.loading_num_2{
-    width:18px; 
-    height:32px;
-    background-position: -85px -37px
-}
-.loading_num_3{
-    width:18px; 
-    height:33px; 
-    background-position: -23px -40px
-}
-.loading_num_4{
-    width:21px; 
-    height:34px; 
-    background-position: -57px -1px
-}
-
-.loading_num_5{
-    width:18px; 
-    height:33px; 
-    background-position: -65px -37px
-}
-
-.loading_num_6{
-    width:20px; 
-    height:34px; 
-    background-position: -80px -1px
-}
-.loading_num_7{
-    width:17px; 
-    height:33px; 
-    background-position: -102px -1px
-}
-.loading_num_8{
-    width:21px; 
-    height:35px;
-    background-position: -34px -1px
-}
-.loading_num_9{
-    width:20px; 
-    height:34px; 
-    background-position: -43px -38px
-}
-.loading_num_10{
-    width:31px; 
-    height:37px; 
-    background-position: -1px -1px;
-}
-#loading_percent_1{
-    position: absolute;
-    left: 353px;
-    top: 705px;
-    z-index: 2007;
-}
-#loading_percent_2{
-    position: absolute;
-    left: 376px;
-    top: 705px;
-    z-index: 2015;
-}
-#loading_percent_3{
-    position: absolute;
-    left: 403px;
-    top: 705px;
-    z-index: 2016;
-}
-#loading_percent_4{
-    position: absolute;
-    left: 433px;
-    top: 705px;
-    z-index: 2006;
-}
-
 //js代码
  function updateProgress(progress,callback) {
     var percent = Math.floor(progress * 100);
@@ -331,133 +329,8 @@ function updateProgress(progress) {
 }
 
 ```
-### 2.config.js
-此文件记录了所有内容页图层的数据信息，以及需要引入的js文件
-```javascript
-var config = {
-	"basic": {
-		"js": [
-			{
-				"name": "zepto",
-				"url": "libs/zepto.min.js",
-				"sync": true
-			},
-			{
-				"name": "vconsole",
-				"url": "libs/vconsole.min.js",
-				"sync": true
-			},
-			{
-				"name": "lrz",
-				"url": "libs/lrz.all.bundle.js",
-				"sync": false
-			},
-			{
-				"name": "base64",
-				"url": "libs/base64.min.js",
-				"sync": false
-			},
-			{
-				"name": "Sound",
-				"url": "libs/Sound.min.js",
-				"sync": false
-			},
-			{
-				"name": "qrcode",
-				"url": "libs/qrcode.js",
-				"sync": false
-			},
-			{
-				"name": "Video",
-				"url": "libs/Video.js",
-				"sync": false
-			},
-			{
-				"name": "main0",
-				"url": "./main0.js",
-				"sync": false
-			}
-		],
-		"images": [],
-		"res": [
-			{
-				"url": "res/GameAssets_0.plist",
-				"type": "plist"
-			},
-			{
-				"url": "res/GameAssets_0.png",
-				"type": "image"
-			}
-		],
-		"videos": [],
-		"scenes": [],
-		"models": [],
-		"textures": []
-	},
-	"pages": [],
-	"game": {
-		"scene": {
-			"scene_1": {
-				"z": 1,
-				"rect": [
-					423,
-					485,
-					450,
-					498
-				],
-				"node": {
-					"layer": [
-						"page_1"
-					]
-				}
-			}
-		},
-		"layer": {
-			"page_1": {
-				"z": 1,
-				"rect": [
-					423,
-					485,
-					450,
-					498
-				],
-				"node": {
-					"sprite": [
-						"p_1"
-					],
-					"button": [
-						"btn_1"
-					]
-				}
-			}
-		},
-		"sprite": {
-			"p_1": {
-				"z": 2,
-				"rect": [
-					231.5,
-					376.5,
-					67,
-					281
-				]
-			}
-		},
-		"button": {
-			"btn_1": {
-				"z": 1,
-				"rect": [
-					508,
-					680.5,
-					280,
-					107
-				]
-			}
-		}
-	}
-};
-```
 
-### 3.game.js
+### 2.game.js
 - 微信jssdk接口
 ```javascript
   getJSSDK: function (callback) {
@@ -616,83 +489,8 @@ makeResult: function (callback) {
 
 },
 ```
-### 4.BaseScene.js
-- cocos页面适配
-```javascript
-   resize: function () {
-        var w1 = window.innerWidth;
-        var h1 = window.innerHeight;
 
-        var w2 = cc.winSize.width;          //750
-        var h2 = cc.winSize.height;         //1240
-
-        var w3 = cc.visibleRect.width;      
-        var h3 = cc.visibleRect.height;    
-
-        var r1 = w1 / h1;
-        var s = 1;
-        var scale_level = -1;
-
-        if(this.name=='scene_2'){
-            if(w1 > h1){
-                console.log('横');
-                //var r2 = 1 / r1;
-                s = w3 / 750;
-            }else{
-                console.log('竖');
-                s = w3 / 750;
-            }
-    
-            this.scale = s;
-    
-            return;
-        }else{
-            //////////////////////////////750x1240横竖屏适配方案
-            if(w1 > h1){
-                console.log('横');
-                var r2 = 1 / r1;//
-                if(r2 > 750 / 1030){
-                    scale_level = 1;
-                    s = h3 / 1030;
-                }else if(r2 <= 750 / 1030 && r2 > 640 / 1030){
-                    scale_level = 2;
-                    s = h3 / 1030;
-                }else if(r2 <= 640 / 1030 && r2 > 640 / 1240){
-                    scale_level = 3;
-                    s = w3 / 640;
-                }else if(r2 <= 640 / 1240 && r2 > 600 / 1240){
-                    scale_level = 4;
-                    s = h3 / 1240;
-                }else{
-                    scale_level = 5;
-                    s = w3 / 600;
-                }
-            }else{
-                console.log('竖');
-                if(r1 > 750 / 1030){
-                    s = h3 / 1030;
-                    scale_level = 1;
-                }else if(r1 <= 750 / 1030 && r1 > 640 / 1030){
-                    s = h3 / 1030;
-                    scale_level = 2;
-                }else if(r1 <= 640 / 1030 && r1 > 640 / 1240){
-                    scale_level = 3;
-                    s = w3 / 640;
-                }else if(r1 <= 640 / 1240 && r1 > 600 / 1240){
-                    scale_level = 4;
-                    s = h3 / 1240;
-                }else{
-                    scale_level = 5;
-                    s = w3 / 600;
-                }
-            }
-            console.log(scale_level);
-            this.scale = s;
-        }
-        
-    },
-```
-### 5.TLayer.js
+### 4.TLayer.js
 - 翻页
 ```javascript
 self.createAndFadeOut(self,'目标页名')
