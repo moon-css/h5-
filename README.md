@@ -485,5 +485,5 @@ item.scaleTo(time,s)//元素在time内缩到s大小
 - **main.js**是项目在服务器上运行时的代码，**main0.js**是项目在本地运行时的代码，所以当涉及到这两个js文件的修改时
 ，需要同时修改两个文件内容
 
--上传cdn之前，我们需要把**publish/html5**中的**game.min.js**文件复制到cdn所在的*js*文件夹中
+- 上传cdn之前，我们需要把**publish/html5**中的**game.min.js**文件复制到cdn所在的*js*文件夹中
 
