@@ -104,7 +104,7 @@ report.20210518.123525.7096.0.001.json
 
 
 ## <span id = 'develop'>开发流程</span>
-![h5项目开发流程图](https://user-images.githubusercontent.com/70060430/160377648-6884f878-5a2b-4a9e-a913-5aa9df8f6954.png)
+![h5项目开发流程图](https://user-images.githubusercontent.com/70060430/160612180-f9123954-81cc-4a87-a212-dba6c75205e5.jpg)
 
 ### 1.前期准备
 - 确认需求，确认项目技术点
@@ -112,7 +112,7 @@ report.20210518.123525.7096.0.001.json
 - 编写接口测试用例，测试接口
 
 ### 2.图层导入
-- 处理设计稿，根据命名规则和项目需求进行重命名和处理
+- 处理设计稿，根据命名规则和项目需求进行重命名和处理,处理好的设计图命名为**game.psd**放在**assets/psd**中
 - 按顺序运行以下三句命令，导出设计图层和设计数据
 ```javascript
 npm run export
@@ -127,6 +127,9 @@ npm run export2
 代码示例：
 
 ```javascript
+
+index.html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -214,16 +217,50 @@ npm run export2
     <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
 </body>
 </html>
+
+
+game.js
+
+//如果需要点击开始的话，首先把game.js中的所有startScene函数调用注释掉，然后在initlayer中编写以下代码;如果加载结束直接开始的话就不需要写开始点击代码
+
+initLayer: function () {
+	var self = this;
+	$("#start").on('touchend',function(){//start为开始按钮的id名
+		game.startScene();
+	)
+},
 ```
-
-
-
-
-
 #### 内容页
-在结束加载页的绘制后，我们在**src/base/layer**文件夹中的**TLayer.js**中进行内容页的绘制，使用**cocos2dx.js**的功能来实现图层的动画效果，以及页面的跳转。同时在**TLayer.js**文件的最后，我们有整理总结一些页面可以用到的功能函数，可以方便用户直接使用。
+
+代码示例：
+```javascript
+TLayer.js
+
+case '页面名称':
+	console.log('page_1');
+	//绘制内容页
+break;
+
+```
+页面名称和**game.psd**中处理的每一页的名称对应。
+
+
+
 #### 海报页
-海报页区分于加载页和内容页，是通过canvas绘制生成的一张透明的图片。用户可以通过**js**文件夹下的**game.js**中的*loadPoster*函数下载海报页图层资源，然后在下载结束之后，通过*makeResult*函数绘制canvas并且放入**index.html**中的结果容器div中。并提前在**css**下的style.css中设置好样式。
+代码示例：
+```javascript
+TLayer.js
+
+game['loadPoster'](game['num'],function(){//game['num']是指需要生成的海报参数，如果没有多种海报的话，把loadPoster函数中的这个参数删掉就可以了
+    game['makeResult'](function(){
+    var result_background = new TLayer('page_result');
+    self.parent.addChild(result_background, self.zIndex + 1);
+                            
+    })
+})
+```
+调用game中的两个函数生成海报，在生成之后再跳转到结果页。**loadPoster，makeResult**两个函数具体看[*重点代码*](#keyCode)中的game.js块。
+
 
 ### 4.本地测试
 所有的页面绘制结束之后，打开本地地址，在手机以及电脑上本地预览，测试有无bug，并且优化整体代码。
@@ -286,7 +323,7 @@ npm run export2
 ```javascript
 //div设置
 
-  <div id="loading_percent" class="loading">
+<div id="loading_percent" class="loading">
     <div id="loading_percent_1" class="sprite"></div>
     <div id="loading_percent_2" class="sprite loading_num_0"></div>
     <div id="loading_percent_3" class="sprite loading_num_10"></div>
@@ -294,7 +331,7 @@ npm run export2
 </div>
 
 //js代码
- function updateProgress(progress,callback) {
+function updateProgress(progress,callback) {
     var percent = Math.floor(progress * 100);
 
     var str = String(percent);
@@ -331,115 +368,46 @@ function updateProgress(progress) {
 ```
 
 ### 2.game.js
-- 微信jssdk接口
-```javascript
-  getJSSDK: function (callback) {
-        if(!this.isWeChat)return;
-        $.get('./api/getJSSDKSign/', {
-            url: window.location.href
-        }, function (res) {
-            callback && callback(res);
-        }, 'json');
-    },
-```
-- 跳转到cocos页面
+- 跳转到cocos页面，可以控制进入具体那个scene里
 ```javascript
 startScene:function(){
     var self = this;
     setTimeout(function(){
         console.log('scene_1');
         self.hidePage('loading');
-        self.start('scene_1', {
+        self.start('scene_1', {//如果设置了多个scene，此处控制从loading页第一次进入的scene
 
         });
     },0);
 },
 ```
 
-- 微信分享接口
-```javascript
-  setShare: function (title, desc, desc2) {
-        var link = h5_config.baseLink + h5_config.para;
-        var imgUrl = (h5_config.baseUrl || h5_config.baseLink) + 'images/icon.jpg';
-
-        var success1 = function () {
-            //share timeline callback
-            game.log('nbjc1200', "share_sussess" + "_time");
-        };
-
-        var success2 = function () {
-            //share friend callback
-            game.log('nbjc1200', "share_sussess" + "_friend");
-        };
-
-        var cancel = function () {
-            game.log('nbjc1200', "share_sussess" + "_cancel");
-
-        };
-        wx.updateTimelineShareData({
-            title: desc2, // 分享标题
-            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: imgUrl, // 分享图标
-            success: success1,
-            cancel:cancel
-        });
-        wx.updateAppMessageShareData({ 
-            title: title, // 分享标题
-            desc: desc, // 分享描述
-            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: imgUrl, // 分享图标
-            success: success2,
-            cancel: cancel
-        })
-    }
-```
 - 加载海报页资源
 ```javascript
 loadPoster:function(name,callback){
-        var load_count=0;
-        var self=this;
-        console.log(game['num']);
-        var loadList=['js/coords.js','js/poster/rs_'+name+'.js'];//生成海报页所需的js文件
-        
-        for(var i=0;i<loadList.length;i++){
-            loader.loadScript(loadList[i],function(){
-                load_count++;
-                if(load_count==loadList.length){
-                    var base64List=[
-                        game['poster']['poster'],
-                        game['poster']['share']
-                    ];
-                    self.initImgs(base64List,function(){//初始化图层
-                        callback && callback();
-                    })
-                }
-            })
-        }
-    },
+	var load_count=0;
+	var self=this;
+	console.log(game['num']);
+	var loadList=['js/coords.js','js/poster/rs_'+name+'.js'];//生成海报页所需的js文件
+
+	for(var i=0;i<loadList.length;i++){
+	    loader.loadScript(loadList[i],function(){
+		load_count++;
+		if(load_count==loadList.length){
+		    var base64List=[
+			game['poster']['poster'],
+			game['poster']['share']
+		    ];
+		    self.initImgs(base64List,function(){//初始化图层
+			callback && callback();
+		    })
+		}
+	    })
+	}
+},
 ```
 - 生成海报
 ```javascript
-initImgs:function(resList,callback){
-    this['imgList']=[];//注意清空上一次的img图片
-    var loadCount=0;
-    for(var i=0;i<resList.length;i++){
-       var b64=resList[i];
-       var img=new Image();
-       img.src=b64;
-       img.addEventListener('load',function(){
-           loadCount++;
-           if(loadCount==resList.length){
-               callback();
-           }
-       })
-       this['imgList'].push(img);
-   }
-},
-drawImageOnPoster:function(imgList,context,leftList,topList){
-    for(var i=0;i<imgList.length;i++){
-        context.drawImage(imgList[i],leftList[i],topList[i]);
-    }
-},
 makeResult: function (callback) {
     var self=this;
     var leftList=[config_coords['rs_'+(game['num'])]['left'],config_coords.share.left];
@@ -461,6 +429,7 @@ makeResult: function (callback) {
 
     self.drawImageOnPoster(game['imgList'],ctx,leftList,topList);
     console.log(game['imgList']);
+    //还可以在canvas上绘制文字和其他图片资源，且一般图片资源用base64格式比较合适
 
 
 
