@@ -114,11 +114,8 @@ report.20210518.123525.7096.0.001.json
 ### 2.图层导入
 - 处理设计稿，根据命名规则和项目需求进行重命名和处理,处理好的设计图命名为**game.psd**放在**assets/psd**中
 - 按顺序运行以下三句命令，导出设计图层和设计数据
-```javascript
-npm run export
-npm run pack
-npm run export2
-```
+
+`npm run export、npm run pack、npm run export2`
 
 ### 3.代码开发
 开始编写项目代码，从加载页到内容页再到海报页。
