@@ -16,7 +16,92 @@ h5项目是我们公司基于cocos框架以及JavaScript语言制作的一种通
 
 ## <span id = 'docCata'>文件目录</span>
 
-*待补充*
+### assets
+
+base64  
+base64_2  
+bg  
+clockposter  
+frame  
+game   
+load  
+loading  
+loading2  
+num  
+num2  
+other  
+poster  
+psd  
+GameAssets.tps  
+GameAssets2000.tps  
+Loading.tps  
+num.tps  
+num2.tps  
+
+### css
+style.css
+### frameworks
+### images
+### js
+poster  
+base64.js  
+config.js  
+coords.js  
+game.js  
+loader.js  
+### libs
+### node
+### node_modules
+### publish
+#### 0930
+css  
+images  
+js  
+libs  
+res  
+#### html5
+res  
+index.html  
+game.min.js  
+project.json  
+build.xml  
+### res
+audio  
+video  
+### src
+#### base
+#### action
+#### label
+#### layer
+BaseLayer.js  
+TLayer.js  
+#### scene
+BaseScene.js
+#### sprite
+### unit
+AnimationSprite.js  
+FloatLayer.js  
+MusicLayer.js  
+MyFunction.js  
+Shake.js  
+TransparentMask.js  
+Config.js  
+MyLoading.js  
+resource.js  
+
+CMakeLists.txt  
+manifest.webapp  
+yarn.lock  
+index.html  
+.cocos-project.json  
+gulpfile.js  
+main.js  
+main0.js  
+package-lock.json  
+package.json  
+project.json  
+report.20210518.123525.7096.0.001.json
+
 
 ## <span id = 'develop'>开发流程</span>
 ![h5项目开发流程图](https://user-images.githubusercontent.com/70060430/160377648-6884f878-5a2b-4a9e-a913-5aa9df8f6954.png)
@@ -635,4 +720,6 @@ item.scaleTo(time,s)//元素在time内缩到s大小
 ## <span id = 'atten'>注意事项</span>
 - **main.js**是项目在服务器上运行时的代码，**main0.js**是项目在本地运行时的代码，所以当涉及到这两个js文件的修改时
 ，需要同时修改两个文件内容
+
+-上传cdn之前，我们需要把**publish/html5**中的**game.min.js**文件复制到cdn所在的*js*文件夹中
 
