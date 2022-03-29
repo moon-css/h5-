@@ -635,6 +635,4 @@ item.scaleTo(time,s)//元素在time内缩到s大小
 ## <span id = 'atten'>注意事项</span>
 - **main.js**是项目在服务器上运行时的代码，**main0.js**是项目在本地运行时的代码，所以当涉及到这两个js文件的修改时
 ，需要同时修改两个文件内容
-同时
-同时xiu g
 
