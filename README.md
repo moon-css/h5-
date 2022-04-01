@@ -16,91 +16,88 @@ h5项目是我们公司基于cocos框架以及JavaScript语言制作的一种通
 
 ## <span id = 'docCata'>文件目录</span>
 
-### assets
-
-base64  
-base64_2  
-bg  
-clockposter  
-frame  
-game   
-load  
-loading  
-loading2  
-num  
-num2  
-other  
-poster  
-psd  
-GameAssets.tps  
-GameAssets2000.tps  
-Loading.tps  
-num.tps  
-num2.tps  
-
-### css
-style.css
-### frameworks
-### images
-### js
-poster  
-base64.js  
-config.js  
-coords.js  
-game.js  
-loader.js  
-### libs
-### node
-### node_modules
-### publish
-#### 0930
-css  
-images  
-js  
-libs  
-res  
-#### html5
-res  
-index.html  
-game.min.js  
-project.json  
-build.xml  
-### res
-audio  
-video  
-### src  
-#### base 
-**action**  
-**label**  
-**layer**  
-BaseLayer.js  
-TLayer.js  
-**scene**  
-BaseScene.js  
-**sprite**  
-#### unit
-AnimationSprite.js  
-FloatLayer.js  
-MusicLayer.js  
-MyFunction.js  
-Shake.js  
-TransparentMask.js  
-Config.js  
-MyLoading.js  
-resource.js  
-
-CMakeLists.txt  
-manifest.webapp  
-yarn.lock  
-index.html  
-.cocos-project.json  
-gulpfile.js  
-main.js  
-main0.js  
-package-lock.json  
-package.json  
-project.json  
-report.20210518.123525.7096.0.001.json
+- assets
+	- base64  
+	- base64_2  
+	- bg  
+	- clockposter  
+	- frame  
+	- game   
+	- load  
+	- loading  
+	- loading2  
+	- num  
+	- num2  
+	- other  
+	- poster  
+	- psd  
+	- GameAssets.tps  
+	- GameAssets2000.tps  
+	- Loading.tps  
+	- num.tps  
+	- num2.tps  
+- css
+	- style.css
+- frameworks
+- images
+-  js
+	- poster  
+	- base64.js  
+	- config.js  
+	- coords.js  
+	- game.js  
+	- loader.js  
+- libs
+-  node
+-  node_modules
+-  publish
+	-  0930
+		- css  
+		- images  
+		- js  
+		- libs  
+		- res  
+	- html5
+		- res  
+		- index.html  
+		- game.min.js  
+		- project.json  
+		- build.xml  
+-  res
+	- audio  
+	- video  
+-  src  
+	- base 
+		- action  
+		- label  
+		- layer  
+			- BaseLayer.js  
+			- TLayer.js  
+		- scene 
+			- BaseScene.js  
+		- sprite  
+	-  unit
+		- AnimationSprite.js  
+		- FloatLayer.js  
+		- MusicLayer.js  
+		- MyFunction.js  
+		- Shake.js  
+		- TransparentMask.js  
+	- Config.js  
+	- MyLoading.js  
+	- resource.js  
+- CMakeLists.txt  
+- manifest.webapp  
+- yarn.lock  
+- index.html  
+- .cocos-project.json  
+- gulpfile.js  
+- main.js  
+- main0.js  
+- package-lock.json  
+- package.json  
+- project.json  
+- report.20210518.123525.7096.0.001.json
 
 
 ## <span id = 'develop'>开发流程</span>
